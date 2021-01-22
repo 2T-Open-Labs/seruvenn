@@ -10,8 +10,6 @@ https://blog.couchbase.com/saga-pattern-implement-business-transactions-using-mi
 
 Klasik saga orkestratörü, Tetikleyici mikroservise eklenerek (Chris Richardson tanımındaki gibi) tetikleyici akış için hazırlanır.
 
-![alt text](image_saga_orc.jpg)
-
 ## Akış genel olarak
 1. Tetik servisi içinde embed olan SagaOrchestrator ile tetik Command'lerini atar.
 2. Tüketici mikroservisler bu Command'leri yakalar; iş mantıklarını çalıştırır ve sonuç olarak bir Event fırlatır.
@@ -20,6 +18,10 @@ Klasik saga orkestratörü, Tetikleyici mikroservise eklenerek (Chris Richardson
 5. Başarısız tüketici mikroservisler jenerik hata event'leri fırlatır ve SagaOrchestrator başarılı çalışmış tüm mikroservislere rollback komutlarını dağıtır.
 6. Herhangi bir sub-command kalmayana ve SagaOrchestrator tüm başarılı veya rollback_başarılı eventleri toplayana kadar Saga devam eder.
 
+###Başarılı Akış
+![alt text](image_saga_orc.jpg)
+
+###Rollback Akışı
 ![alt text](image_saga_orc_roll.jpg)
 
 
