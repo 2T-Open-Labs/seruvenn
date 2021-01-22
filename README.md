@@ -1,13 +1,12 @@
 
 # Serüvenn
-## Olay Tabanlı - Asenkron-öncelikli - Saga Orkestrasyonu temelli Mikroservice Çatısı
-## (Event Driven - Async-first - Saga Orchestration) 
+## Olay Tabanlı - Asenkron-öncelikli - Saga Orkestrasyonu temelli Mikroservice Çatısı (Event Driven - Async-first - Saga Orchestration) 
 
 Geliştirmesi hâlâ devam ediyor !!!
 
 Serüvenn, bir Mikroservis çatı kütüphanesidir. Asenkron-öncelikli (Async-first) mikroservis dünyasının ACID transaction problematiğine getirilen Orkestrasyon tipi Saga işleyicisi ve bu Saga Orkestratörüne event gönderen "Tüketici" mikroservisleri şablonunu içeren bir çalışmadır. Saga akışında tetikleyen ve tüketen mikroservisler için bir temel ve şablon içerir. Saga Orkestratörü dinamik olarak DB içeriği ile çalışacak şekilde programlanmıştır.
 
-Saga Orkestraonu için referans bilgi için: 
+Saga Orkestrayonu için referans bilgi için: 
 https://blog.couchbase.com/saga-pattern-implement-business-transactions-using-microservices-part-2/
 
 Klasik saga orkestratörü, Tetikleyici mikroservise eklenerek (Chris Richardson tanımındaki gibi) tetikleyici akış için hazırlanır.
