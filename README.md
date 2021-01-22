@@ -1,5 +1,5 @@
 
-#Serüvenn : Event Driven - Async-first - Saga Orkestrasyonlu Mikroservis Çatısı
+# Serüvenn : Event Driven - Async-first - Saga Orkestrasyonlu Mikroservis Çatısı
 
 Geliştirmesi hâlâ devam ediyor !!!
 
@@ -12,7 +12,7 @@ Klasik saga orkestratörü, Tetikleyici mikroservise eklenerek (Chris Richardson
 
 ![alt text](image_saga_orc.jpg)
 
-##Akış genel olarak
+## Akış genel olarak
 1. Tetik servisi içinde embed olan SagaOrchestrator ile tetik Command'lerini atar.
 2. Tüketici mikroservisler bu Command'leri yakalar; iş mantıklarını çalıştırır ve sonuç olarak bir Event fırlatır.
 3. Bu event'ler filtreli bir şekilde sadece SagaOrchestrator tarafından dinlenir. 
@@ -23,7 +23,7 @@ Klasik saga orkestratörü, Tetikleyici mikroservise eklenerek (Chris Richardson
 ![alt text](image_saga_orc_roll.jpg)
 
 
-##Varsayımlar:
+## Varsayımlar:
 1. Bir command bir Saga içerisinde bir kere çalışması kabul edilmiştir.
 2. SagaOrchestrator'a ulaşan bir Event için birden fazla Command çalıştırılabilir.
 3. SagaOrchestrator Command'leri tek tek event'lere göre fırlatır.
@@ -40,7 +40,7 @@ Klasik saga orkestratörü, Tetikleyici mikroservise eklenerek (Chris Richardson
 14. İş ihtiyacına göre birden fazla Saga akışı olabileceği için (örneğin şikayet akışı Saga'sı, alışveriş sepeti Saga'sı gibi gibi...) Commons altındaki SagaCodes sınıfına veritabanındaji Saga kodlarının sync edilmesi gerekmektedir. Dinamik bir şekilde almak üzere burası geliştirilebilir.
 
 
-##Veri Modeli
+## Veri Modeli
 
 ![alt text](db_1.png)
 
@@ -55,7 +55,7 @@ EVENT_TYPE_CLASS_NAME: Tüketici mikroservislerin ürettiği her bir Event için
 HIBERNATE_SEQUENCE: Silmeyin!!! Hibernate'in sequence sırasını tutmak için oluşturduğu otomatik tablodur.
 
 
-##Örnek uygulama
+## Örnek uygulama
 
 //FIXME burası IaaC moduna (container, orchestrator, playbook) dönüştürülebilir. Henüz geliştirme aşamasında !!
 
@@ -64,9 +64,9 @@ Bu örnekte Parent_command çalıştıktan sonra Sub1, Sub2 ve Sub3 Command'leri
 Mevcut çalıştırma ile Success path'i çalışacaktır. Rollback denemesi yapıp, tüm işlem geçirmiş servislerin teker teker nasıl Rollback komutları aldığını görmek için herhangi bir SubX listener mikroservis seçilip, SUCCESSFUL event'i yerine GENERIC_ERROR event'i atması sağlanarak rollback gözlemlenebilir. 
 
 
-###AWS üzerinde veya Ubuntu temelinde Serüvenn Örnek Kurulumu
+### AWS üzerinde veya Ubuntu temelinde Serüvenn Örnek Kurulumu
 
-###MySQL
+### MySQL
 
 Ubuntu 18.04 HVM
 t2.small (1x2)
@@ -118,7 +118,7 @@ sudo journalctl ile logları kontrol etmek gerekir
 bu noktadan sonra AWS'nin verdiği IPv4 ip'si ile bir Mysql Client uygulaması ile (örneğin HeidiSQL) root kullanıcısı ve [APP_MYSQL_PASSWORD] yerine yazdığınız şifre ile girip veritabanına ulaşabilirsiniz. Bağlandıysanız: [APP_DB_NAME] yerine geçebilecek bir Db adı ile bir veritabanı oluşturmanuz gerekir. HeidiSQL'de sağ tıkla yapabilirsiniz...
 
 
-###KAFKA
+### KAFKA
 
 Ubuntu 18.04 HVM
 t2.xlarge (4x16)
@@ -164,7 +164,7 @@ diyerek global topic'i oluşturabilirsiniz
 artık [APP_KAFKA_GLOBAL_TOPIC_IP]:3030 adresine tarayıcıdan gidip, Topics alanına baktığınızda Topic listesinde [APP_KAFKA_GLOBAL_TOPIC_NAME] yerine koyduğunuz topic adını göreceksiniz. Üstüne tıklayarak üzerindeki mesajları görebilirsiniz
 
 
-###KOD DEĞİŞİKLİKLERİ
+### KOD DEĞİŞİKLİKLERİ
 
 Favori editörünüz nedir bilmem ama bizde STS var. CTRL+Shift+R -> "*.properties" filtresi ile 6 properties dosyasını açıp her dosyada aşağıdaki property'leri doğrularıyla değiştirmeniz gerekiyor:
 
@@ -177,12 +177,12 @@ Favori editörünüz nedir bilmem ama bizde STS var. CTRL+Shift+R -> "*.properti
 Eclipse türevi kullanıyorsanız, bi Project -> Clean All iyi olacaktır değil mi, malum daha bir parent pom yazmadık :)
 
 
-###ÇALIŞTIRMA
+### ÇALIŞTIRMA
 
 DemoTriggerMS ve DemoConsumerMS projeleri geliştirici bilgisayarında Spring Boot projesi olarak başlatılabilir. Böylelikle JPA, [APP_DB_NAME] ismi ile anılan veritabanı üzerine ilgili tabloları DDL update ile oluşturur. 
 
 
-###DB ÖRNEK AKIŞ YÜKLEME
+### DB ÖRNEK AKIŞ YÜKLEME
 
 Bundan sonra aşağıdaki komutlar Mysql üzerinde çalıştırılır. HeidiSQL veya bir Mysql client veya Mysql sunucusu üzerinde "sudo mysql" çalıştırarak girilen client'ta bu dosya komutları çalıştırılabilir. Bu adım gerçekleşmezse örnek veri olmadığı için "Saga Bulunamadı" gibi hatalarla karşılaşabilirsiniz. Ki bu çok doğal... Çünkü içeride bir çok şey dinamik tanımlanıyor
 
@@ -249,10 +249,10 @@ VALUES (1003, "com.ikite.seruvenn.Commons.carriers.Foo", "SUB3_ROLLBACK_OK");
 ```
 
 
-###EN SON
+### EN SON
 
 İlk tetik denemesi için localhost:9098/dene adresinden tetik yapılabilir.
 
-###SONUÇ
+### SONUÇ
 ![alt text](succ_1.png)
 ![alt text](succ_2.png)
