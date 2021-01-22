@@ -1,6 +1,6 @@
 
 # Serüvenn
-## Olay Tabanlı - Asenkron-öncelikli - Saga Orkestrasyonu temelli Mikroservice Çatısı (Event Driven - Async-first - Saga Orchestration) 
+## Olay Tabanlı - Asenkron-öncelikli - Saga Orkestrasyonu temelli Mikroservis Çatısı (Event Driven - Async-first - Saga Orchestration) 
 
 Geliştirmesi hâlâ devam ediyor !!!
 
