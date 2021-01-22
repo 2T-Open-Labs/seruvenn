@@ -6,6 +6,8 @@ Geliştirmesi hâlâ devam ediyor !!!
 
 Serüvenn, bir Mikroservis çatı kütüphanesidir. Asenkron-öncelikli (Async-first) mikroservis dünyasının ACID transaction problematiğine getirilen Orkestrasyon tipi Saga işleyicisi ve bu Saga Orkestratörüne event gönderen "Tüketici" mikroservisleri şablonunu içeren bir çalışmadır. Saga akışında tetikleyen ve tüketen mikroservisler için bir temel ve şablon içerir. Saga Orkestratörü dinamik olarak DB içeriği ile çalışacak şekilde programlanmıştır.
 
+Geliştirme Ekibi
+
 &nbsp;
 [![Linkedin](https://i.stack.imgur.com/gVE0j.png) Hatice Şahin Akdaş](https://www.linkedin.com/in/hatice-%C5%9Fahin-91508989/)
 &nbsp;
@@ -14,6 +16,7 @@ Serüvenn, bir Mikroservis çatı kütüphanesidir. Asenkron-öncelikli (Async-f
 [![Linkedin](https://i.stack.imgur.com/gVE0j.png) Oğuzhan Ceylan](https://www.linkedin.com/in/o%C4%9Fuzhan-ceylan-53726442/)
 &nbsp;
 [![Linkedin](https://i.stack.imgur.com/gVE0j.png) Selim Aksoy](https://www.linkedin.com/in/selimaksoy/)
+
 
 
 Saga Orkestrasyonu için referans bilgi için: 
