@@ -25,7 +25,7 @@ Klasik saga orkestratörü, Tetikleyici mikroservise eklenerek (Chris Richardson
 ![alt text](image_saga_orc_roll.jpg)
 
 
-## Varsayımlar:
+## Varsayımlar
 1. Bir command bir Saga içerisinde bir kere çalışması kabul edilmiştir.
 2. SagaOrchestrator'a ulaşan bir Event için birden fazla Command çalıştırılabilir.
 3. SagaOrchestrator Command'leri tek tek event'lere göre fırlatır.
@@ -46,15 +46,25 @@ Klasik saga orkestratörü, Tetikleyici mikroservise eklenerek (Chris Richardson
 
 ![alt text](db_1.png)
 
-SAGA: Bir iş alanında örneğin bir e-ticaret sitesinde hem Sipariş Saga'sı hem İade Saga'sı vb bir çok Saga olabileceği için tanım dinamik bir şekilde Saga tablosunda tutulur. 
+SAGA
 
-SAGA_STATE: Saga altındaki adımların tutulduğu tablodur. Her bir event'e karşılık gelen Success path adımları Reverse_Command=0 olacak şekilde tutulur. O event'e ait Rollback adımı ise, aynı adım tablosunda Reverse_Command=1 olacak şekilde tutulur. Bir event'te birden fazla Command çıkabileceği için ve bir Saga'da bir Command bir kez yazılacağı varsayıldığı için constraint SagaID + CommandType üzerine kurulmuştur.
+Bir iş alanında örneğin bir e-ticaret sitesinde hem Sipariş Saga'sı hem İade Saga'sı vb bir çok Saga olabileceği için tanım dinamik bir şekilde Saga tablosunda tutulur. 
 
-COMMAND_TYPE_CLASS_NAME: Saga'nın ürettiği her bir Command içinde gönderilebilecek yegane Taşıyıcı nesnenin uzun paket+sınıf adı eşleşmesi içerir. Örneğin: SiparisCommand -> com.x.y.Siparis gibi...
+SAGA_STATE
 
-EVENT_TYPE_CLASS_NAME: Tüketici mikroservislerin ürettiği her bir Event içinde gönderilebilecek yegane Taşıyıcı nesnenin uzun paket+sınıf adı eşleşmesi içerir. Örneğin: SiparisSuccessfulEvent-> com.x.y.Siparis gibi...
+Saga altındaki adımların tutulduğu tablodur. Her bir event'e karşılık gelen Success path adımları Reverse_Command=0 olacak şekilde tutulur. O event'e ait Rollback adımı ise, aynı adım tablosunda Reverse_Command=1 olacak şekilde tutulur. Bir event'te birden fazla Command çıkabileceği için ve bir Saga'da bir Command bir kez yazılacağı varsayıldığı için constraint SagaID + CommandType üzerine kurulmuştur.
 
-HIBERNATE_SEQUENCE: Silmeyin!!! Hibernate'in sequence sırasını tutmak için oluşturduğu otomatik tablodur.
+COMMAND_TYPE_CLASS_NAME
+
+Saga'nın ürettiği her bir Command içinde gönderilebilecek yegane Taşıyıcı nesnenin uzun paket+sınıf adı eşleşmesi içerir. Örneğin: SiparisCommand -> com.x.y.Siparis gibi...
+
+EVENT_TYPE_CLASS_NAME
+
+Tüketici mikroservislerin ürettiği her bir Event içinde gönderilebilecek yegane Taşıyıcı nesnenin uzun paket+sınıf adı eşleşmesi içerir. Örneğin: SiparisSuccessfulEvent-> com.x.y.Siparis gibi...
+
+HIBERNATE_SEQUENCE
+
+Silmeyin!!! Hibernate'in sequence sırasını tutmak için oluşturduğu otomatik tablodur.
 
 
 ## Örnek uygulama
@@ -68,13 +78,18 @@ Mevcut çalıştırma ile Success path'i çalışacaktır. Rollback denemesi yap
 
 ### AWS üzerinde veya Ubuntu temelinde Serüvenn Örnek Kurulumu
 
-### MySQL
+### MySQL Kurulumu
 
 Ubuntu 18.04 HVM
+
 t2.small (1x2)
+
 security tüm portlar açık (prod'da tabii ki bunu yapmayın plz)
+
 disk 8gb SSD general purpose
+
 userdata alanı aşağıdaki gibi:
+
 
 ```
 #!/bin/bash
@@ -120,13 +135,18 @@ sudo journalctl ile logları kontrol etmek gerekir
 bu noktadan sonra AWS'nin verdiği IPv4 ip'si ile bir Mysql Client uygulaması ile (örneğin HeidiSQL) root kullanıcısı ve [APP_MYSQL_PASSWORD] yerine yazdığınız şifre ile girip veritabanına ulaşabilirsiniz. Bağlandıysanız: [APP_DB_NAME] yerine geçebilecek bir Db adı ile bir veritabanı oluşturmanuz gerekir. HeidiSQL'de sağ tıkla yapabilirsiniz...
 
 
-### KAFKA
+### Kafka Kurulumu
 
 Ubuntu 18.04 HVM
+
 t2.xlarge (4x16)
+
 security tüm portlar açık (prod'da tabii ki bunu yapmayın plz)
+
 disk 20gb SSD general purpose
+
 userdata alanı aşağıdaki gibi, hiçbir şey değiştirmeden:
+
 
 ```
 #!/bin/bash
@@ -166,25 +186,30 @@ diyerek global topic'i oluşturabilirsiniz
 artık [APP_KAFKA_GLOBAL_TOPIC_IP]:3030 adresine tarayıcıdan gidip, Topics alanına baktığınızda Topic listesinde [APP_KAFKA_GLOBAL_TOPIC_NAME] yerine koyduğunuz topic adını göreceksiniz. Üstüne tıklayarak üzerindeki mesajları görebilirsiniz
 
 
-### KOD DEĞİŞİKLİKLERİ
+### Kod Değişiklikleri
 
 Favori editörünüz nedir bilmem ama bizde STS var. CTRL+Shift+R -> "*.properties" filtresi ile 6 properties dosyasını açıp her dosyada aşağıdaki property'leri doğrularıyla değiştirmeniz gerekiyor:
 
 [APP_MYSQL_IP] -> buraya yukarıdaki MySQL sunucusu public IPv4 ip'si
+
 [APP_DB_NAME] -> seçtiğiniz veritabanı adı
+
 [APP_MYSQL_PASSWORD] -> seçtiğiniz veritabanı şifresi
+
 [APP_KAFKA_GLOBAL_TOPIC_NAME] -> Kafka global topic için seçtiğiniz isim
+
 [APP_KAFKA_GLOBAL_TOPIC_IP] -> buraya yukarıdaki Kafka sunucusu public IPv4 ip'si
+
 
 Eclipse türevi kullanıyorsanız, bi Project -> Clean All iyi olacaktır değil mi, malum daha bir parent pom yazmadık :)
 
 
-### ÇALIŞTIRMA
+### Çalıştırma
 
 DemoTriggerMS ve DemoConsumerMS projeleri geliştirici bilgisayarında Spring Boot projesi olarak başlatılabilir. Böylelikle JPA, [APP_DB_NAME] ismi ile anılan veritabanı üzerine ilgili tabloları DDL update ile oluşturur. 
 
 
-### DB ÖRNEK AKIŞ YÜKLEME
+### DB Örnek Akışı Yükleme
 
 Bundan sonra aşağıdaki komutlar Mysql üzerinde çalıştırılır. HeidiSQL veya bir Mysql client veya Mysql sunucusu üzerinde "sudo mysql" çalıştırarak girilen client'ta bu dosya komutları çalıştırılabilir. Bu adım gerçekleşmezse örnek veri olmadığı için "Saga Bulunamadı" gibi hatalarla karşılaşabilirsiniz. Ki bu çok doğal... Çünkü içeride bir çok şey dinamik tanımlanıyor
 
@@ -251,10 +276,10 @@ VALUES (1003, "com.ikite.seruvenn.Commons.carriers.Foo", "SUB3_ROLLBACK_OK");
 ```
 
 
-### EN SON
+### En Son
 
 İlk tetik denemesi için localhost:9098/dene adresinden tetik yapılabilir.
 
-### SONUÇ
+### Sonuç
 ![alt text](succ_1.png)
 ![alt text](succ_2.png)
