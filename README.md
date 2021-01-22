@@ -18,10 +18,10 @@ Klasik saga orkestratörü, Tetikleyici mikroservise eklenerek (Chris Richardson
 5. Başarısız tüketici mikroservisler jenerik hata event'leri fırlatır ve SagaOrchestrator başarılı çalışmış tüm mikroservislere rollback komutlarını dağıtır.
 6. Herhangi bir sub-command kalmayana ve SagaOrchestrator tüm başarılı veya rollback_başarılı eventleri toplayana kadar Saga devam eder.
 
-###Başarılı Akış
+### Başarılı Akış
 ![alt text](image_saga_orc.jpg)
 
-###Rollback Akışı
+### Rollback Akışı
 ![alt text](image_saga_orc_roll.jpg)
 
 
