@@ -1,9 +1,11 @@
 
-# Serüvenn : Event Driven - Async-first - Saga Orkestrasyonlu Mikroservis Çatısı
+# Serüvenn
+# Olay Tabanlı - Asenkron-öncelikli - Saga Orkestrasyonu temelli Mikroservice Çatısı
+# (Event Driven - Async-first - Saga Orchestration)
 
 Geliştirmesi hâlâ devam ediyor !!!
 
-Serüvenn, bir Mikroservis çatı kütüphanesidir. Asenkron-öncelikli (Async-first) mikroservis dünyasının ACID transaction problematiğine getirilen Orkestrasyon tipi Saga işleyicisi ve bu Saga Orchestrator'a event gönderen "Tüketici" mikroservisleri şablonunu içeren bir çalışmadır. 
+Serüvenn, bir Mikroservis çatı kütüphanesidir. Asenkron-öncelikli (Async-first) mikroservis dünyasının ACID transaction problematiğine getirilen Orkestrasyon tipi Saga işleyicisi ve bu Saga Orkestratörüne event gönderen "Tüketici" mikroservisleri şablonunu içeren bir çalışmadır. Saga akışında tetikleyen ve tüketen mikroservisler için bir temel ve şablon içerir. Saga Orkestratörü dinamik olarak DB içeriği ile çalışacak şekilde programlanmıştır.
 
 Saga Orkestraonu için referans bilgi için: 
 https://blog.couchbase.com/saga-pattern-implement-business-transactions-using-microservices-part-2/
@@ -11,12 +13,12 @@ https://blog.couchbase.com/saga-pattern-implement-business-transactions-using-mi
 Klasik saga orkestratörü, Tetikleyici mikroservise eklenerek (Chris Richardson tanımındaki gibi) tetikleyici akış için hazırlanır.
 
 ## Akış genel olarak
-1. Tetik servisi içinde embed olan SagaOrchestrator ile tetik Command'lerini atar.
+1. Tetik servisi içinde embed olan Saga Orkestratörü ile tetik Command'lerini atar.
 2. Tüketici mikroservisler bu Command'leri yakalar; iş mantıklarını çalıştırır ve sonuç olarak bir Event fırlatır.
-3. Bu event'ler filtreli bir şekilde sadece SagaOrchestrator tarafından dinlenir. 
-4. SagaOrchestrator gelen başarılı veya rollback gerektiren Event'ler için DB'de dinamik tutulan bir veya birden fazla sub-Command setini çalıştırır.
-5. Başarısız tüketici mikroservisler jenerik hata event'leri fırlatır ve SagaOrchestrator başarılı çalışmış tüm mikroservislere rollback komutlarını dağıtır.
-6. Herhangi bir sub-command kalmayana ve SagaOrchestrator tüm başarılı veya rollback_başarılı eventleri toplayana kadar Saga devam eder.
+3. Bu event'ler filtreli bir şekilde sadece Saga Orkestratörü tarafından dinlenir. 
+4. Saga Orkestratörü gelen başarılı veya rollback gerektiren Event'ler için DB'de dinamik tutulan bir veya birden fazla sub-Command setini çalıştırır.
+5. Başarısız tüketici mikroservisler jenerik hata event'leri fırlatır ve Saga Orkestratörü başarılı çalışmış tüm mikroservislere rollback komutlarını dağıtır.
+6. Herhangi bir sub-command kalmayana ve Saga Orkestratörü tüm başarılı veya rollback_başarılı eventleri toplayana kadar Saga devam eder.
 
 ### Başarılı Akış
 ![alt text](image_saga_orc.jpg)
@@ -27,14 +29,14 @@ Klasik saga orkestratörü, Tetikleyici mikroservise eklenerek (Chris Richardson
 
 ## Varsayımlar
 1. Bir command bir Saga içerisinde bir kere çalışması kabul edilmiştir.
-2. SagaOrchestrator'a ulaşan bir Event için birden fazla Command çalıştırılabilir.
-3. SagaOrchestrator Command'leri tek tek event'lere göre fırlatır.
+2. Saga Orkestratörüne ulaşan bir Event için birden fazla Command çalıştırılabilir.
+3. Saga Orkestratörü Command'leri tek tek event'lere göre fırlatır.
 4. Event'lerin dinlenmesi ise her event bazında filter edilmiş şekilde Rollback eventleri ile LeftJoin olarak dinlenir. Bunun anlamı şudur: Bir event'in örneğin START_OF_ORDER_SUCCESSFUL event'inin yalnız başına geldiği bir timewindow'da Success Command'lerini çalıştırabilmek ve aynı zamanda START_OF_ORDER_SUCCESSFUL + GENERIC_ERROR gibi bir join olduğunda bir Rollback Command başlatılması gerekmektedir.
 5. Kafka'ya atılan Event mesajları içinde Command ve Event'ler bir arada bulunur. 
 6. Kafka'ya atılan Event'ler içinde custom taşınan nesneler CarrierEntity alanında tutulur. Bu alana gelecek objelerin KafkaMessageInnerEntity sınıfını extend etmesi gerekecektir. Kod geliştiriciyi buna zorlayacaktır
 7. CarrierEntity alanında gönderilen her taşıyıcı obje için DB'ye (Mysql) kayıt gerekmektedir. Command ve Event için ayrı tablolar bulunmaktadır.
-8. Buradaki Saga Orchestrator routing işlemini dinamik olarak yapar. Eğer gelen her event'te custom bir çok aksiyon almak istiyorsanız, bu framework amacınıza uygun değildir.
-9. SagaOrchestrator rollback anını yakalamak için herhangi bir servisten GENERIC_ERROR hatasının atılmasını sabit bir şekilde bekler.
+8. Buradaki Saga Orkestratörü routing işlemini dinamik olarak yapar. Eğer gelen her event'te custom bir çok aksiyon almak istiyorsanız, bu framework amacınıza uygun değildir.
+9. Saga Orkestratörü rollback anını yakalamak için herhangi bir servisten GENERIC_ERROR hatasının atılmasını sabit bir şekilde bekler.
 10. Mevcut Serüvenn halen geliştirme aşamasındadır. Katkılarınızla daha da iyi konuma gelecektir.
 11. Commons projesi birçok veritabanı nesnesi, taşıyıcı obje ve Saga kodları izini taşımaktadır. 
 12. Bu çatıyı kullanan geliştiricilerin Commons projesinde Parent, Sub1, Sub2 vb isimlerle anılan Command ve Event nesnelerini kendi iş ihtiyaçlarına göre CommandType, EventType nesnelerini güncellemeleri gerekmektedir.
