@@ -36,7 +36,7 @@ Klasik saga orkestratörü, Tetikleyici mikroservise eklenerek (Chris Richardson
 ![alt text](image_saga_orc.jpg)
 
 ### Rollback Akışı
-![alt text](image_saga_orc_roll.jpg)
+![alt text](image_saga_orc_rollback.jpg)
 
 
 ## Varsayımlar
