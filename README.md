@@ -80,6 +80,10 @@ HIBERNATE_SEQUENCE
 
 Silmeyin!!! Hibernate'in sequence sırasını tutmak için oluşturduğu otomatik tablodur.
 
+## Kod Şablonları
+
+Repo ana dizinindeki templates_seruvenn.xml dosyasında Tetikleyici ve Tüketici mikroservisler için 2 kod şablonu bulunmaktadır. Eclipse -> Window -> Preferences -> Java -> Editor -> Templates ekranında bu XML import edilmesi gerekmektedir. Sonrasında yeni servisler yazılacağı zaman, yeni sınıfta sadece paket adı kalacak şekilde, ctrl+space ile code assist açıldığında, seruvenn.. ile başlayan şablonları görebileceksiniz.
+
 
 ## Örnek uygulama
 
