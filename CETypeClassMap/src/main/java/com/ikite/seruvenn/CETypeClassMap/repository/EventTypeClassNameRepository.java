@@ -10,7 +10,7 @@ import com.ikite.seruvenn.CETypeClassMap.model.EventTypeClassName;
 
 public interface EventTypeClassNameRepository extends CrudRepository<EventTypeClassName, Integer>{
 
-	@Query(value="select * from event_type_class_name where event_type=?1", nativeQuery = true)
+	@Query(value="select * from EVENT_TYPE_CLASS_NAME where EVENT_TYPE=?1", nativeQuery = true)
 	List<EventTypeClassName> findByEventType(String eventType);
 	
 }

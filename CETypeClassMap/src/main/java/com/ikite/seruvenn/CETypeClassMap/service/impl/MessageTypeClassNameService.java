@@ -31,20 +31,19 @@ public class MessageTypeClassNameService implements IMessageTypeClassNameService
 	EventTypeClassNameRepository eventTypeClassNameRepository;
 	
 	@Override
-	@Cacheable 
 	public List<CommandTypeClassName> getCommandTypeClassName(String commandType) {
 		
 		//FIXME https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/cache/annotation/EnableCaching.html#annotation.type.element.detail
 		//FIXME buradaki proxyTargetClass açıklaması okunmalı; çözüm burada gibi... şu an cache boş gibi her defasında metoda giriyor...
 		
-		LOG.info("*********db den ilk kez çekiliyor");
+		LOG.info("*********db den ilk kez çekiliyor. CommandType: "+commandType);
 		return commandTypeClassNameRepository.findByCommandType(commandType);
 	}
 	
 	@Override
 	@Cacheable
 	public List<EventTypeClassName> getEventTypeClassName(String eventType) {
-		LOG.info("*********db den ilk kez çekiliyor");
+		LOG.info("*********db den ilk kez çekiliyor. EventType: "+eventType);
 		return eventTypeClassNameRepository.findByEventType(eventType);
 	}
 
@@ -54,7 +53,7 @@ public class MessageTypeClassNameService implements IMessageTypeClassNameService
 		List<CommandTypeClassName> pairs = getCommandTypeClassName(commandType);
 		
 		if (pairs == null || pairs.isEmpty()) {
-			throw new CommandClassPairException("**** Command Type - ClassName pairs not found");
+			throw new CommandClassPairException("**** Command Type - ClassName pairs not found. CommandType: "+commandType);
 		}
 		
 		if (pairs.size() > 1) {
@@ -64,7 +63,7 @@ public class MessageTypeClassNameService implements IMessageTypeClassNameService
 		CommandTypeClassName pair = pairs.get(0);
 		
 		if (pair.getClassName() == null || pair.getClassName().isEmpty() || pair.getCommandType() == null || pair.getCommandType().isEmpty()) {
-			throw new CommandClassPairException("**** Dirty data on Command Type - ClassName pair - check pair DB");
+			throw new CommandClassPairException("**** Dirty data on Command Type - ClassName pair - check pair DB. CommandType: "+commandType);
 		}
 		
 		return pair.getClassName().equals(className);
@@ -76,17 +75,17 @@ public class MessageTypeClassNameService implements IMessageTypeClassNameService
 		List<EventTypeClassName> pairs = getEventTypeClassName(eventType);
 		
 		if (pairs == null || pairs.isEmpty()) {
-			throw new EventClassPairException("**** Event Type - ClassName pairs not found");
+			throw new EventClassPairException("**** Event Type - ClassName pairs not found. EventType: "+eventType);
 		}
 		
 		if (pairs.size() > 1) {
-			throw new EventClassPairException("**** More than 1 Event Type - ClassName pair found - check pair DB");
+			throw new EventClassPairException("**** More than 1 Event Type - ClassName pair found - check pair DB. EventType: "+eventType );
 		}
 		
 		EventTypeClassName pair = pairs.get(0);
 		
 		if (pair.getClassName() == null || pair.getClassName().isEmpty() || pair.getEventType() == null || pair.getEventType().isEmpty()) {
-			throw new EventClassPairException("**** Dirty data on Event Type - ClassName pair - check pair DB");
+			throw new EventClassPairException("**** Dirty data on Event Type - ClassName pair - check pair DB. EventType: "+ eventType);
 		}
 		
 		return pair.getClassName().equals(className);

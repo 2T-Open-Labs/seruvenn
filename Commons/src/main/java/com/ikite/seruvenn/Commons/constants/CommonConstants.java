@@ -24,6 +24,8 @@ public class CommonConstants {
 	public static final String TRUE = "TRUE";
 	public static final String FALSE = "FALSE";
 	
-	public static final String TOPIC_NAME_STRING = "topic_name"; 
+	public static final String TOPIC_NAME_STRING = "topic_name";
+	public static final String SUCCESS_MSG = "Isleminiz Basarili Sekilde Tamamlandi."; 
+	//FIXME Burayi Properties'e tasiyacagiz.
 	
 }

@@ -38,6 +38,9 @@ public class Saga implements Serializable {
 
 	@Column(name = "KOD", unique = true)
 	private String kod;
+	
+	@Column(name = "AD", unique = true)
+	private String ad;
 
 	@Column(name = "OLUSTURMA_TARIHI")
 	private Date olusturmaTarihi;
@@ -95,6 +98,16 @@ public class Saga implements Serializable {
 
 	public void setStateList(Set<SagaState> stateList) {
 		this.stateList = stateList;
+	}
+
+
+	public String getAd() {
+		return ad;
+	}
+
+
+	public void setAd(String ad) {
+		this.ad = ad;
 	}
 	
 }
